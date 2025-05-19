@@ -40,7 +40,7 @@ SIGEM has the following parameters:
 
 --bch_gpu: Batch size for computation on GPU; it is ignored if --gpu=False
 
---prl_num: Number of parallel computation on CPU
+--prl_num: Number of parallel computation on CPU; it is ignored if --gpu=True
 
 --epc: Number of Epochs for training, default is 100
 
