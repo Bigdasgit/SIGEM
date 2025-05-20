@@ -7,7 +7,6 @@ In order to run SIGEM, the following packages are required:
 ```
 Python       >= 3.12
 tensorflow   >= 2.18.0
-networkx     =3.4.2
 numpy        =1.26.4
 scipy        =1.31.1
 scikit-learn =1.5.2
