@@ -19,9 +19,9 @@ A graph must be represented as a text file under the *edge list format* in which
 ## Running SIGEM
 SIGEM has the following parameters: 
 ```
---graph: Input graph
+--graph: Input graph; default is ''
 
---dataset_name: dataset name
+--dataset_name: dataset name; default is None
 
 --result_dir: Destination to save the embedding result, default is "output/" in the root directory
 
@@ -31,7 +31,7 @@ SIGEM has the following parameters:
 
 --damping_factor: Damping factor for similarity computation, defaul is 0.2
 
---scaling_factor: Scaling factor to select top nodes (defaul is -1); set it as 10 for link prediction and node classification tasks, and as 2 for the graph reconstruction task
+--scaling_factor: Scaling factor to select top nodes (defaul is None); set it as 10 for link prediction and node classification tasks, and as 2 for the graph reconstruction task
 
 --gpu: The flag indicating to run SIGEM on GPU, default is True
 
@@ -43,9 +43,9 @@ SIGEM has the following parameters:
 
 --epc: Number of Epochs for training, default is 100
 
---lr: Learning rate (defaul is -1); set it as 0.0030 for small graphs and as 0.0012 for very large graphs
+--lr: Learning rate (defaul is None); set it as 0.0030 for small graphs and as 0.0012 for very large graphs
 
---reg: Regularization rate (defaul is -1); set it as 0.001 and 0.00001 with directed and undirected graphs, respectively
+--reg: Regularization rate (defaul is None); set it as 0.001 and 0.00001 with directed and undirected graphs, respectively
 
 --early_stop: Flag indicating to stop the training process if the loss stops improving, default is True
 
