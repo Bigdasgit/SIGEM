@@ -46,8 +46,6 @@ SIGEM has the following parameters:
 
 --lr: Learning rate (defaul is None); set it as 0.0030 for small graphs and as 0.0012 for very large graphs
 
---reg: Regularization rate (defaul is None); set it as 0.001 and 0.00001 with directed and undirected graphs, respectively
-
 --early_stop: Flag indicating to stop the training process if the loss stops improving, default is True
 
 --wait_thr: Number of epochs with no loss improvement after which the training will be stopped, default is 10
@@ -61,37 +59,34 @@ SIGEM has the following parameters:
 --topK_save_path: Path to write the top nodes into a binary file
 ```
 ### NOTE:
-**It is hihgly recommended** to set the values of "--itr", "--damping_factor", "--scaling_factor", "--bch_cpu", "--bch_gpu", "--lr", and "--reg" parameters to the ones explained in Section 5.3.1 of the paper.
+**It is hihgly recommended** to set the values of "--itr", "--damping_factor", "--scaling_factor", "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
 
 ### Sample:
 1) Link Prediction Task
 
 ```
-python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --reg 0.001
+python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030
 
-python SIGEM.py --graph data/Live_train_70.txt --dataset_name Live_train_70 --scaling_factor 10 --lr 0.0030 --reg 0.00001 --write_topK_nodes True --topK_save_path output/ ## saving top nodes in a file before training
+python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --write_topK_nodes True --topK_save_path output/ ## saving top nodes in a file before training
 
-python SIGEM.py --graph data/Live_train_70.txt --dataset_name Live_train_70 --scaling_factor 10 --lr 0.0030 --reg 0.00001 --read_topK_nodes True --topK_file output/Live_train_70_SIGEM_IT_5_C_2_listMLE_topK_Scl10 ## loading top nodes from a file for training
+python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --read_topK_nodes True --topK_file output/Live_train_70_SIGEM_IT_5_C_2_listMLE_topK_Scl10 ## loading top nodes from a file for training
 ```
 
 2) Node Classification Task
 
 ```
-python SIGEM.py --graph data/Cora_directed_graph.txt --dataset_name Cora --scaling_factor 10 --lr 0.0030 --reg 0.001
+python SIGEM.py --graph data/Cora_directed_graph.txt --dataset_name Cora --scaling_factor 10 --lr 0.0030
 
-python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --scaling_factor 10 --lr 0.0030 --reg 0.00001
 ```
 
 3) Graph Reconstruction Task
 
 ```
-python SIGEM.py --graph data/Cora_directed_graph.txt --dataset_name Cora --scaling_factor 2 --lr 0.0030 --reg 0.001
-
-python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --scaling_factor 2 --lr 0.0030 --reg 0.00001
+python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --scaling_factor 2 --lr 0.0030
 ```
 
 ## Citation:
 > Masoud Reyhani Hamedani, Jeong-Seok Oh, Seong-Un Cho, and Sang-Wook Kim. 2025. SIGEM: A Simple yet Effective Similarity based Graph Embedding Method. In Proceedings of the 31st ACM SIGKDD International Conference on
-Knowledge Discovery and Data Mining, KDD'25, August 03-07, 2025, Toronto, ON, Canada, pages: xx. https://doi.org/xx/xxx.xxx
+Knowledge Discovery and Data Mining, KDD'25, August 03-07, 2025, Toronto, ON, Canada, pages: -
 
 
