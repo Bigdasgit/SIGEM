@@ -14,7 +14,8 @@ tqdm         =4.66.6
 ```
 SIGEM can be run directly from the command line or migrated to your favorite IDE.
 ## Graph Format
-A graph must be represented as a text file under the *edge list format* in which, each line corresponds to an edge in the graph, tab is used as the separator of the two nodes, and the node index is started from 0. 
+1) A graph must be represented as a text file under the **edge list format** in which, each line corresponds to an edge in the graph, tab is used as the separator of the two nodes, and the node index is started from 0.
+2) A single original link in an **undirected graph and its train/test splitted graphs** must be represented via two links in both directions.
 
 ## Running SIGEM
 SIGEM has the following parameters: 
