@@ -5,12 +5,12 @@ This repository provides the reference implementation of SIGEM and LINOW (matrix
 ## Installation and Usage
 In order to run SIGEM, the following packages are required:
 ```
-Python       >= 3.12
-tensorflow   >= 2.18.0
-numpy        =1.26.4
-scipy        =1.13.1
-scikit-learn =1.5.2
-tqdm         =4.66.6
+Python       = 3.12
+tensorflow   = 2.18.0
+numpy        = 1.26.4
+scipy        = 1.13.1
+scikit-learn = 1.5.2
+tqdm         = 4.66.6
 ```
 SIGEM can be run directly from the command line or migrated to your favorite IDE.
 ## Graph Format
