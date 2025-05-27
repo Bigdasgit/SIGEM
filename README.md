@@ -59,7 +59,7 @@ SIGEM has the following parameters:
 --topK_save_path: Path to write the top nodes into a binary file
 ```
 ### NOTE:
-**It is hihgly recommended** to set the values of "--itr", "--damping_factor", "--scaling_factor", "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
+**It is highly recommended** to set the values of "--itr", "--damping_factor", "--scaling_factor", "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
 
 ### Sample:
 1) Link Prediction Task
@@ -88,5 +88,3 @@ python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --sca
 ## Citation:
 > Masoud Reyhani Hamedani, Jeong-Seok Oh, Seong-Un Cho, and Sang-Wook Kim. 2025. SIGEM: A Simple yet Effective Similarity based Graph Embedding Method. In Proceedings of the 31st ACM SIGKDD International Conference on
 Knowledge Discovery and Data Mining, KDD'25, August 03-07, 2025, Toronto, ON, Canada, pages: -
-
-
