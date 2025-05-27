@@ -225,7 +225,15 @@ Inspired by the aforementioned discussion, we conducted additional experiments o
   </thead>
   <tbody>
     <tr>
-      <td><code>GraphSAGE</code></td>
+      <td><code>GRACE</code></td>
+      <td>14.51</td>
+      <td>13.62</td>
+      <td>12.34</td>
+      <td>12.52</td>
+      <td>12.21</td>
+    </tr>    
+    <tr>
+      <td><code>BGRL</code></td>
       <td>15.09</td>
       <td>17.12</td>
       <td>16.22</td>
