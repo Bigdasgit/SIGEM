@@ -169,7 +169,7 @@ Inspired by the aforementioned discussion, we conducted additional experiments o
 
 ---
 
- **(3) GRACE and BGRL:**  GRACE and BGRL require node attributes; they failed to run on attributeless data (all datasets in our paper are attributeless). We tried to modify their code to use ‘identity features’ for attributeless graphs, following GraphSAGE [NIPS’17]: 
+ **(3) GRACE and BGRL:**  These two methods also require node attributes; they failed to run on attributeless data; we tried to modify their code to use ‘identity features’ for attributeless graphs, following GraphSAGE [NIPS’17]. We would like to note that both methods suffer from **D4** (i.e., Limited Applicability) since they perform end-to-end training for only node classification
  
  <table>
   <caption><strong>Table 1: Results of the node classification task with the CoCit dataset</strong></caption>
@@ -250,7 +250,6 @@ Inspired by the aforementioned discussion, we conducted additional experiments o
     </tr>
   </tbody>
 </table>
-
  
 As we observed in Tables 1 and 2, SIGEM significantly outperforms both GRACE and BGRL. The possible reason is that these methods take advantage of both node features (matrix $\mathcal{X}$) and graph structure (adjacency matrix $\mathcal{A}$) in the embedding process. However, since our datasets are attributeless, we modified their code to use ‘identity features’ as node attributes, following GraphSAGE [NIPS’17], which likely undermines their learning quality. 
 
