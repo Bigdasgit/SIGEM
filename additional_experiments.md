@@ -1,7 +1,7 @@
 
 ## Please note that the link prediction results in this page, are obtained by randomly removing 30% of links, while those in the SIGEM OpenReview page are obtained by randomly removing 10% of links.
 
-**(1) GraphSAGE:** We could not utilize the original implementation of GraphSAGE since it fails on directed graphs with sink nodes, which all the directed graphs used in our paper have. Therefore, we conducted the experiments by using its improved implementation from SigMaNet [9]. We would also like to note that GraphSAGE suffers from **D4** (i.e., Limited Applicability) since it performs end-to-end training for only link prediction and node classification tasks. The results of GrashSAGE on these two tasks are as follows:
+**(1) GraphSAGE:** We could not utilize the original implementation of GraphSAGE since it fails on directed graphs with sink nodes, which all the directed graphs used in our paper have. Therefore, we conducted the experiments by using its improved implementation from SigMaNet [9]. We would also like to note that GraphSAGE suffers from **D4** (i.e., Limited Applicability) since it performs end-to-end training for only link prediction and node classification tasks. The results of GraphSAGE on these two tasks are as follows:
 
 <table>
   <caption><strong>Table 1: Results of the link prediction task</strong></caption>
@@ -142,7 +142,7 @@ Inspired by the aforementioned discussion, we conducted additional experiments o
       <td>96.55</td><td>98.32</td>
       <td>OOM</td><td>OOM</td>
       <td>93.53</td><td>92.40</td>
-      <td>97.76</td><td>99.08</td>
+      <td>98.36</td><td>99.08</td>
     </tr>
     <tr>
       <td><code>GATv2-TrueDir</code></td>
