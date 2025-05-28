@@ -1,6 +1,16 @@
 # SIGEM: A Simple yet Effective Similarity based Graph Embedding Method
 
-This repository provides the reference implementation of SIGEM and LINOW (matrix form, LINOW-sn, LINOW-bn/MP, and LINOW-bn/TF).
+This repository provides the reference implementation of SIGEM and LINOW (matrix form, LINOW-sn, LINOW-bn/MP, and LINOW-bn/TF). 
+
+SIGEM is a self-supervised and contrastive-free embedding method that provides a single latent vector for each node in a graph. SIGEM is simply implemented by a single-layer neural network with a listwise learning-to-rank loss function:
+
+(1)  SIGEM employs LINOW, as a link-based similarity measure, to compute similarity scores of nodes batch-wise.
+
+(2) For each nodes $u$ in the batch, it then ranks the nodes based on their LINOW scores w.r.t. $u$ in descending order and picks the top-*t* ones. 
+
+(3) After completing the ranking process for all nodes in the graph, SIGEM tries to preserve the original ranks of the top-*t* similar nodes to any node $u$, within their corresponding latent vectors in the embedding space. 
+
+![SIGEM_small](https://github.com/user-attachments/assets/44e4ed6c-18f4-4331-a42a-d9516aea6281)
 
 ## Installation and Usage
 In order to run SIGEM, the following packages are required:
