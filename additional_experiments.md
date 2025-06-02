@@ -1,5 +1,5 @@
 
-## Please note that the link prediction results in this page, are obtained by randomly removing 30% of links, while those in the SIGEM OpenReview page are obtained by randomly removing 10% of links.
+## Please note that the link prediction results in this page, are obtained by randomly removing 30% of links, while those in the SIGEM's OpenReview page are obtained by randomly removing 10% of links.
 
 **(1) GraphSAGE:** We could not utilize the original implementation of GraphSAGE since it fails on directed graphs with sink nodes, which all the directed graphs used in our paper have. Therefore, we conducted the experiments by using its improved implementation from SigMaNet [9]. We would also like to note that GraphSAGE suffers from **D4** (i.e., Limited Applicability) since it performs end-to-end training for only link prediction and node classification tasks. The results of GraphSAGE on these two tasks are as follows:
 
