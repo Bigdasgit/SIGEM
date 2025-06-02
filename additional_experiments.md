@@ -165,7 +165,7 @@ Inspired by the aforementioned discussion, we conducted additional experiments o
 
 (2) Directed Graphs: GATv2 outperforms GATv2-TrueDir on directed graphs. This result is also expected since GATv2 ignores link directions; treating a directed graph incorrectly as undirected simplifies the training (embedding) and inference process, potentially at the cost of ignoring important structural information.
 
-(3) Comparison with SIGEM: SIGEM outperforms both GATv2 and GATv2-TrueDir on both directed and undirected graphs except with the Epins dataset where GATv2 shows slightly higher AUC (98.48 vs 98.32) and precision (98.39 vs 98.22) values (possibly because GATv2 ignores link directions). The possible reason is that GATv2 may inherit the GCN’s limitations in gathering contextual information for low-degree nodes [46][59].
+(3) Comparison with SIGEM: With the Epins dataset, GATv2 shows slightly higher AUC (98.48 vs 98.32) and precision (98.39 vs 98.22) values than SIGEM, possibly because GATv2 ignores link directions in directed graphs. With the all other datasets, SIGEM outperforms both GATv2 and GATv2-TrueDir; the possible reason is that GATv2 may inherit the GCN’s limitations in gathering contextual information for low-degree nodes [46][59].
 
 ---
 
