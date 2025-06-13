@@ -157,8 +157,8 @@ def train_one_epoch(model, loss_fn, optimizer, dataset):
     num_batches = tf.constant(0)
     for batch_x, batch_y in dataset:    
         with tf.GradientTape() as tape:
-            y_true = model(tf.sparse.to_dense(batch_x))            
-            loss = loss_fn.compute_loss_listMLE(batch_y, y_true)
+            y_pred = model(tf.sparse.to_dense(batch_x))            
+            loss = loss_fn.compute_loss_listMLE(batch_y, y_pred)
         gradients = tape.gradient(loss, model.trainable_variables)
         optimizer.apply_gradients(zip(gradients, model.trainable_variables))
         epoch_loss += loss
