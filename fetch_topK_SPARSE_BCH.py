@@ -13,7 +13,10 @@ def get_listMLE_topK_BCH_py(result_matrix, topK):
     '''                
         @return: top_indices: |batch|*topK matrix contians indices of topK nodes to each target node 
     '''      
-    top_indices = np.zeros((result_matrix.shape[0],topK),dtype='int32')  
+    if topK > result_matrix.shape[1]:
+        top_indices = np.zeros((result_matrix.shape[0],result_matrix.shape[1]),dtype='int32')
+    else:
+        top_indices = np.zeros((result_matrix.shape[0],topK),dtype='int32')
     for target_node in range (0,result_matrix.shape[0]):
         target_node_res_sorted = np.argsort(result_matrix[target_node,:], axis=0)[::-1][:topK] 
         top_indices[target_node] = target_node_res_sorted
