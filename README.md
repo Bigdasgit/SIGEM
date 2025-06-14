@@ -69,7 +69,7 @@ SIGEM has the following parameters:
 --topK_save_path: Path to write the top nodes into a binary file
 ```
 ### NOTE:
-**It is highly recommended** to set the values of "--itr", "--damping_factor", "--scaling_factor", "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
+**It is highly recommended** to set the values of (1) "--itr" and "--damping_factor" to 5 and 0.2, respectively, for all tasks, (2) "--scaling_factor" to 10, 10, and 2 for link prediction, node classification, and graph reconstruction tasks, respectively, (3) "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
 
 ### Sample:
 1) Link Prediction Task
