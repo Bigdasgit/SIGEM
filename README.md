@@ -10,8 +10,7 @@ SIGEM is a self-supervised and contrastive-free embedding method that provides a
 
 (3) After completing the ranking process for all nodes in the graph, SIGEM tries to preserve the original ranks of the top-*t* similar nodes to any node $u$, within their corresponding latent vectors in the embedding space. 
 
-![SIGEM](https://github.com/user-attachments/assets/f7a06427-3ebf-472f-898e-6088adcfaf0f)
-
+![SIGEM](https://github.com/user-attachments/assets/84571e90-dfc9-42c8-86d0-feb24127549e)
 
 ## Installation and Usage
 In order to run SIGEM, the following packages are required:
