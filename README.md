@@ -1,4 +1,4 @@
-# SIGEM: A Simple yet Effective Similarity based Graph Embedding Method (Best Research Paper, Honorable Mention)
+# SIGEM: A Simple yet Effective Similarity based Graph Embedding Method (Best Research Paper, Honorable Mention at KDD'25)
 
 This repository provides the reference implementation of SIGEM and LINOW (matrix form, LINOW-sn, LINOW-bn/MP, and LINOW-bn/TF). 
 
