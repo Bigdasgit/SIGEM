@@ -1,4 +1,4 @@
-# SIGEM: A Simple yet Effective Similarity based Graph Embedding Method
+# SIGEM: A Simple yet Effective Similarity based Graph Embedding Method (Best Research Paper, Honorable Mention)
 
 This repository provides the reference implementation of SIGEM and LINOW (matrix form, LINOW-sn, LINOW-bn/MP, and LINOW-bn/TF). 
 
@@ -97,4 +97,4 @@ python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --sca
 
 ## Citation:
 > Masoud Reyhani Hamedani, Jeong-Seok Oh, Seong-Un Cho, and Sang-Wook Kim. 2025. SIGEM: A Simple yet Effective Similarity based Graph Embedding Method. In Proceedings of the 31st ACM SIGKDD International Conference on
-Knowledge Discovery and Data Mining, KDD'25, August 03-07, 2025, Toronto, ON, Canada, pages: -
+Knowledge Discovery and Data Mining, KDD'25, August 03-07, 2025, Toronto, ON, Canada, pages: 2420-2431, https://doi.org/10.1145/3711896.3737128
