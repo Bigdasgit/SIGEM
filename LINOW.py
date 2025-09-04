@@ -1,7 +1,7 @@
 '''
 Created on August 08, 2024
 
-@NOTE: contains related implementation of LINOW (matrix form, LINOW-sn, LINOW-bn)   
+@NOTE: contains related implementation of LINOW (linear matrix form, LINOW-sn, LINOW-bn)   
 
 '''
 import numpy as np
