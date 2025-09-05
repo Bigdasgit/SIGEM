@@ -1,7 +1,7 @@
 '''
 Created on August 08, 2024
 
-@NOTE: contains related implementation of LINOW (linear matrix form, LINOW-sn, LINOW-bn)   
+@NOTE: contains related implementation of LINOW (matrix form, linear matrix form, LINOW_LMF-sn, and LINOW_LMF-bn)   
 
 '''
 import numpy as np
@@ -14,9 +14,47 @@ from scipy.sparse import csr_matrix, identity, csr_array
 from sklearn.preprocessing import normalize
 from concurrent.futures import ProcessPoolExecutor
 
-def LINOW (graph='', iterations=0, damping_factor=0.8):
+def LINOW_MF (graph='', iterations=0, damping_factor=0.8):
     '''
         This is the implementation of the LINOW matrix form
+
+        @param graph: the graph dataset
+        @param iterations: number of iteration
+        @param damping_factor: C
+        @return: |V|*|V| matrix, each row i contains similarity scores for node i         
+    '''
+    print("Starting similarity computation on dataset '{}' with itrations={} and C={}...".format(graph,iterations,damping_factor))
+    
+    #============================================================================================
+        # reading graph, computing weights matrix
+    #============================================================================================    
+    edges = np.loadtxt(graph, dtype=int)
+    num_nodes = np.max(edges) + 1
+    adj = csr_matrix((np.ones(len(edges)), (edges[:, 0], edges[:, 1])), shape=(num_nodes, num_nodes), dtype='int32') 
+    print('Adjacency matrix is constructed ...')    
+    print("Number of nodes:",num_nodes)    
+    degrees = adj.sum(axis=0).T     
+    weights = csr_matrix(1/np.log(degrees+math.e))  
+    weight_matrix = csr_matrix(adj.multiply(weights)).astype(dtype='float32',casting='unsafe')         
+    del degrees
+    del weights
+    result_matrix = identity(weight_matrix.shape[0],dtype='float32', format='csr')
+    weight_matrix = normalize(weight_matrix, norm='l1', axis=0) 
+    for itr in range (1, iterations+1):
+        print("Iteration "+str(itr)+' ...')
+        temp = result_matrix * weight_matrix
+        result_matrix =  damping_factor/2.0 * (temp + temp.T) 
+        result_matrix.setdiag(1) ## disjunction operator
+        
+    # print(result_matrix.todense())
+    print("LINOW Matrix Form: similarity computation is completed ... \n")    
+    return result_matrix
+
+
+
+def LINOW_LMF (graph='', iterations=0, damping_factor=0.8):
+    '''
+        This is the implementation of the LINOW linear matrix form
 
         @param graph: the graph dataset
         @param iterations: number of iteration
@@ -47,7 +85,7 @@ def LINOW (graph='', iterations=0, damping_factor=0.8):
         temp = result_matrix * weight_matrix
         result_matrix =  damping_factor/2.0 * (temp + temp.T) + iden_matrix
     # print(result_matrix.todense())
-    print("LINOW Matrix Form: similarity computation is completed ... \n")    
+    print("LINOW Linear Matrix Form: similarity computation is completed ... \n")    
     return result_matrix
 
 def compute_LINOW_sn (graph='', iterations=0, damping_factor=0.8, target_nodes = []):
@@ -78,7 +116,7 @@ def compute_LINOW_sn (graph='', iterations=0, damping_factor=0.8, target_nodes =
         result_array.append(similarity_array.T)
     result_matrix = np.matrix(result_array, dtype=np.float32)
     print(result_matrix)
-    print("LINOW-SN: similarity computation is completed ... \n")        
+    print("LINOW_LMF-SN: similarity computation is completed ... \n")        
     return result_matrix
 
 def compute_LINOW_bn (graph='', iterations=0, damping_factor=0.8, bch_size=16, num_of_pr=1, GPU=False):
@@ -129,7 +167,7 @@ def compute_LINOW_bn (graph='', iterations=0, damping_factor=0.8, bch_size=16, n
                     result_matrix = future.result().T                        
                     yield result_matrix
             # print("\nTIME CPU/multi-process: "+str(round((time.time() - start_time)/60,3))+'\n')      
-    print("LINOW-BN: similarity computation is completed ... \n")        
+    print("LINOW_LMF-BN: similarity computation is completed ... \n")        
        
                        
 def LINOW_sn(n, K, C, W, q):
@@ -232,7 +270,7 @@ def LINOW_bn_tensor_based(n, K, C, W, q):
 if __name__ == "__main__":
     
     ## matrix multiplication
-    LINOW(graph="data/Cora_directed_graph.txt",
+    LINOW_LMF(graph="data/Cora_directed_graph.txt",
                iterations=5,
                damping_factor = 0.2
            )
