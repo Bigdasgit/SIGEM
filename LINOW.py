@@ -1,7 +1,7 @@
 '''
 Created on August 08, 2024
 
-@NOTE: contains related implementation of LINOW (matrix form, linear matrix form, LINOW_LMF-sn, and LINOW_LMF-bn)   
+@NOTE: LINOW Implementation (matrix form, linear matrix form, LINOW_LMF-sn, and LINOW_LMF-bn)   
 
 '''
 import numpy as np
