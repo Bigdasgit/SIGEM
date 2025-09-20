@@ -134,8 +134,7 @@ class ListMLELoss_topK(tf.keras.losses.Loss):
         ''' 
         return compute_loss_tfFunc(y_true, y_pred)
 
-@tf.function   
-def compute_loss_tfFunc(y_true, y_pred):
+ def compute_loss_tfFunc(y_true, y_pred):
     '''            
         Computes listMLE-topK loss function
     ''' 
@@ -148,7 +147,8 @@ def compute_loss_tfFunc(y_true, y_pred):
     loss_values = tf.math.log(tf.math.abs(final_sum) + tf.keras.backend.epsilon()) - y_ture_scores
     negative_log_likelihood = tf.reduce_mean(tf.reduce_sum(loss_values, axis=1, keepdims=True))
     return negative_log_likelihood    
-
+     
+@tf.function 
 def train_one_epoch(model, loss_fn, optimizer, dataset):
     '''
         execute training step for one epoch
