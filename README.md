@@ -32,7 +32,7 @@ SIGEM has the following parameters:
 ```
 --graph: Input graph; default is ''
 
---dataset_name: dataset name; default is None
+--dataset_name: Dataset name; default is None
 
 --result_dir: Destination to save the embedding result, default is "output/" in the root directory
 
@@ -40,9 +40,9 @@ SIGEM has the following parameters:
 
 --itr: Number of Iterations to compute LINOW, default is 5
 
---damping_factor: Damping factor for similarity computation, defaul is 0.2
+--damping_factor: Damping factor for similarity computation, default is 0.2
 
---scaling_factor: Scaling factor to select top nodes (defaul is None); set it as 10 for link prediction and node classification tasks, and as 2 for the graph reconstruction task
+--scaling_factor: Scaling factor to select top nodes (default is None); set it as 10 for link prediction and node classification tasks, and as 2 for the graph reconstruction task
 
 --gpu: The flag indicating to run SIGEM on GPU, default is True
 
@@ -54,7 +54,7 @@ SIGEM has the following parameters:
 
 --epc: Number of Epochs for training, default is 100
 
---lr: Learning rate (defaul is None); set it as 0.0030 for small graphs and as 0.0012 for very large graphs
+--lr: Learning rate (default is None); set it as 0.0030 for small graphs and as 0.0012 for very large graphs
 
 --early_stop: Flag indicating to stop the training process if the loss stops improving, default is True
 
@@ -62,7 +62,7 @@ SIGEM has the following parameters:
 
 --read_topK_nodes: Flag to read top nodes from a binary file, they will be selected by computing similarity otherwise; default is False
 
---topK_file: Paths to the saved top nodes
+--topK_file: Path to the saved top nodes
 
 --write_topK_nodes: Flag to write top nodes into a binary file for later usage; default is False
 
@@ -79,7 +79,7 @@ python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --sc
 
 python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --write_topK_nodes True --topK_save_path output/ ## saving top nodes in a file before training
 
-python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --read_topK_nodes True --topK_file output/Live_train_70_SIGEM_IT_5_C_2_listMLE_topK_Scl10 ## loading top nodes from a file for training
+python SIGEM.py --graph data/Cora_train_70.txt --dataset_name Cora_train_70 --scaling_factor 10 --lr 0.0030 --read_topK_nodes True --topK_file output/Cora_train_70_SIGEM_IT_5_C_2_listMLE_topK_Scl10 ## loading top nodes from a file for training
 ```
 
 2) Node Classification Task
