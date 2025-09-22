@@ -153,7 +153,7 @@ def compute_LINOW_bn (graph='', iterations=0, damping_factor=0.8, bch_size=16, n
         weight_matrix_tensor= tf.sparse.SparseTensor(indices=indices, values=weight_matrix.data, dense_shape=[num_nodes,num_nodes])
         for idx in tqdm(range(0, len(batches))):
             # start_time = time.time()                            
-            result_matrix = LINOW_bn_tensor_based(tf.constant(num_nodes, dtype=tf.int32), tf.constant(iterations, dtype=tf.int32),tf.constant(damping_factor, dtype=tf.float32), weight_matrix_tensor , batches[idx])
+            result_matrix = LINOW_bn_tensor_based(tf.constant(num_nodes, dtype=tf.int32), tf.constant(iterations, dtype=tf.int32),tf.constant(damping_factor, dtype=tf.float32), weight_matrix_tensor , tf.constant(batches[idx],dtype=tf.int32))
             yield result_matrix.T                 
             # print("\nTIME GPU: "+str(round((time.time() - start_time)/60,3))+'\n')            
             
@@ -262,26 +262,31 @@ def LINOW_bn_tensor_based(n, K, C, W, q):
             Gamma = gamma.read((K+1)*(K+1)+(K-i)) + tf.sparse.sparse_dense_matmul(tf.sparse.transpose(W),Gamma)            
         return (tf.math.scalar_mul(1-C,Gamma)).numpy() 
 
-    e_u = tf.Variable(tf.zeros([n, len(q)]), dtype=np.float32)      
-    for i, query_node in enumerate(q):        
-        e_u[query_node, i].assign(1)
-    return compute_(n, K, C, W, tf.constant(q), e_u)    
+    e_u = tf.Variable(tf.zeros([n, tf.shape(q)[0]]), dtype=np.float32)   
+    row_idx = q
+    col_idx = tf.range(tf.shape(q)[0])
+    indices = tf.stack([row_idx, col_idx], axis=1)
+    updates = tf.ones(tf.shape(row_idx), dtype=tf.float32)
+    e_u.assign(tf.tensor_scatter_nd_update(e_u, indices, updates))        
+        
+    return compute_(n, K, C, W, q, e_u)    
 
 if __name__ == "__main__":
     
     ## matrix multiplication
-    LINOW_LMF(graph="data/Cora_directed_graph.txt",
-               iterations=5,
-               damping_factor = 0.2
-           )
+    # LINOW_LMF(graph="data/Cora_directed_graph.txt",
+    #            iterations=5,
+    #            damping_factor = 0.2
+    #        )
     
     ## single node calculation
-    compute_LINOW_sn(graph='data/Cora_directed_graph.txt',                     
-                     iterations=5,
-                     damping_factor = 0.2,
-                     target_nodes=[0],
-                     )
-    
+    # compute_LINOW_sn(graph='data/Cora_directed_graph.txt',                     
+    #                  iterations=5,
+    #                  damping_factor = 0.2,
+    #                  target_nodes=[0],
+    #                  )
+    #
+
     
     ## batch CPU multi-process/GPU calculation
     for thread_result in compute_LINOW_bn(graph='data/Cora_directed_graph.txt',
