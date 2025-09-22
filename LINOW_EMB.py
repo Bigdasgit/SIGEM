@@ -1,5 +1,5 @@
 '''
-Created on August 08, 2024
+Created on August 08, 2024; 
 
 @NOTE: this file contains related implementation for BOTH "similarity computation" and "data preparation for graph embedding"
        1- Computation on CPU: BOTH similarity computation and selecting TopK nodes are run in CPU with multi-processing
@@ -128,7 +128,6 @@ def LINOW_bn_pythonic_EMB(n, K, C, W, q, topK):
 
     return prData.get_listMLE_topK_BCH_py(((1 - C) * Gamma).T, topK)
         
-        
 def LINOW_bn_tensor_based_EMB(n, K, C, W, q, topK):
     """
         Tensor-based implementation for batch similarity computation and data preparation with GPU
@@ -156,10 +155,13 @@ def LINOW_bn_tensor_based_EMB(n, K, C, W, q, topK):
         
         return prData.get_listMLE_topK_BCH_tb( tf.transpose(tf.math.scalar_mul(1-C,Gamma)), topK)
                 
-    e_u = tf.Variable(tf.zeros([n, len(q)]), dtype=np.float32)      
-    for i, query_node in enumerate(q):        
-        e_u[query_node, i].assign(1)
-    return compute_(n, K, C, W, tf.constant(q), topK, tf.constant(e_u))    
+    e_u = tf.Variable(tf.zeros([n, tf.shape(q)[0]]), dtype=np.float32)   
+    row_idx = q
+    col_idx = tf.range(tf.shape(q)[0])
+    indices = tf.stack([row_idx, col_idx], axis=1)
+    updates = tf.ones(tf.shape(row_idx), dtype=tf.float32)
+    e_u.assign(tf.tensor_scatter_nd_update(e_u, indices, updates))        
+    return compute_(n, K, C, W, q, topK, e_u)    
 
 if __name__ == "__main__":
     pass
