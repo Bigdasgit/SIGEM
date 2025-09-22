@@ -1,10 +1,12 @@
 '''
-Created on May 15, 2025
-The formal implementation of SIGEM; 
+Created on May 15, 2025; Revised on September 22, 2025
+The Python implementation of SIGEM; 
 
 '''
 import os
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_auto_jit=2' # Enable XLA
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
@@ -14,10 +16,9 @@ from argparse import ArgumentParser
 from LINOW_EMB import LINOW_bn_EMB
 import time
 import numpy as np
-from scipy.sparse import csr_matrix, csr_array
+from scipy.sparse import csr_matrix
 import pickle
 import math
-
 
 class CustomCallback_verbose_check():
     '''
@@ -89,7 +90,6 @@ class CustomCallback_verbose_check():
 class CustomDenseLayer(layers.Layer):
     '''
         A custom layer in shape d*|V|; 
-        dot products between the latent vector of a target node and those of other nodes are calculated in 'call' function
         Weight matrix d*|V| contains the latent vectors (column i is v_i)
     '''
     def __init__(self, input_shape, output_shape, reg_rate, **kwargs):
@@ -118,6 +118,7 @@ class SIGEM_model (Model):
         super (SIGEM_model, self).__init__()
         self.layer_0 = CustomDenseLayer(dim, num_nodes, reg_rate, name='layer_0')          
         
+    @tf.function  
     def call(self, inputs):
         return self.layer_0(inputs)
     
@@ -129,26 +130,21 @@ class ListMLELoss_topK(tf.keras.losses.Loss):
         '''            
             @param y_true: indices of Top-k nodes 
             @param y_pred: model's output
-            The actual loss is implemented by tf.function (i.e., compute_loss_tfFunc); 
-            to have a better performance, we do not call tf.function directly inside the loop (i.e., train_one_epoch)
         ''' 
         return compute_loss_tfFunc(y_true, y_pred)
-        
-@tf.function 
- def compute_loss_tfFunc(y_true, y_pred):
+    
+def compute_loss_tfFunc(y_true, y_pred):
     '''            
         Computes listMLE-topK loss function
     ''' 
-    raw_max = tf.reduce_max(input_tensor=y_pred, axis=1, keepdims=True)
-    y_pred = y_pred - raw_max       
-    sum_all = tf.reduce_sum(tf.exp(y_pred), axis=1, keepdims=True)  
+    y_pred -= tf.reduce_max(y_pred, axis=1, keepdims=True)
+    exp_y = tf.exp(y_pred)
     y_ture_scores = tf.gather(y_pred,y_true,axis=1,batch_dims=1) 
     cumsum_y_ture_scores = tf.cumsum(tf.exp(y_ture_scores), axis=1, reverse=False, exclusive=True)    
-    final_sum = sum_all - cumsum_y_ture_scores 
-    loss_values = tf.math.log(tf.math.abs(final_sum) + tf.keras.backend.epsilon()) - y_ture_scores
-    negative_log_likelihood = tf.reduce_mean(tf.reduce_sum(loss_values, axis=1, keepdims=True))
-    return negative_log_likelihood    
-     
+    loss_values = tf.math.log(tf.math.abs(tf.reduce_sum(exp_y, axis=1, keepdims=True) - cumsum_y_ture_scores ) + tf.keras.backend.epsilon()) - y_ture_scores
+    return tf.reduce_mean(tf.reduce_sum(loss_values, axis=1, keepdims=True))
+
+@tf.function    
 def train_one_epoch(model, loss_fn, optimizer, dataset):
     '''
         execute training step for one epoch
@@ -249,9 +245,9 @@ def embedding(args):
     print('Creating batches for training ... ')
     dataset = tf.data.Dataset.from_tensor_slices((tf_input, top_indices))
     if args.gpu:
-        dataset = dataset.shuffle(buffer_size=2048).batch(args.bch_gpu) 
+        dataset = dataset.shuffle(buffer_size=2048).batch(args.bch_gpu).prefetch(tf.data.AUTOTUNE)
     else:    
-        dataset = dataset.shuffle(buffer_size=2048).batch(args.bch_cpu)
+        dataset = dataset.shuffle(buffer_size=2048).batch(args.bch_cpu).prefetch(tf.data.AUTOTUNE)
         
     ####################################################
         # Initializing model
@@ -260,6 +256,7 @@ def embedding(args):
     optimizer = tf.keras.optimizers.Adam(learning_rate=args.lr, clipnorm=0.5)
     loss_fn = ListMLELoss_topK()
     model.compile(optimizer=optimizer, loss=loss_fn)
+    model.build((None,))
     cc_verbose_check = CustomCallback_verbose_check (model, optimizer, args.early_stop, args.wait_thr, 0)
     ####################################################
         # Training
@@ -329,25 +326,25 @@ if __name__ == "__main__":
     embedding(args)
     # exit()
     
-    #### Examples      
-    # args = parse_args(graph='data/Live_train_70.txt', 
-    #             dataset_name='Live_train_70', 
-    #               result_dir='output/', 
-    #               dimension=128, 
-    #               scaling_factor=10, 
-    #               iterations=5,
-    #               damping_factor= 0.2,
-    #               epochs=100,
-    #               bch_cpu=128,
-    #               bch_gpu=128,
-    #               gpu_on=True,
-    #               prl_num = 2,
-    #               learning_rate=0.0030, 
-    #               early_stop=True,
-    #               wait_thr=10,
-    #               read_topK_nodes=False,
-    #               topK_file='output/TopKs/Live_train_70_LINOW_IT_5_C_2_listMLE_topK_Scl10',
-    #               write_topK_nodes=True,
-    #               topK_save_path='output/'                  
-    #               )
+    ## Examples      
+    # args = parse_args(graph='data/Cora_train_70.txt', 
+    #               dataset_name='Cora_train_70', 
+    #                 result_dir='output/', 
+    #                 dimension=128, 
+    #                 scaling_factor=10, 
+    #                 iterations=5,
+    #                 damping_factor= 0.2,
+    #                 epochs=100,
+    #                 bch_cpu=128,
+    #                 bch_gpu=128,
+    #                 gpu_on=True,
+    #                 prl_num = 2,
+    #                 learning_rate=0.0030, 
+    #                 early_stop=True,
+    #                 wait_thr=10,
+    #                 read_topK_nodes=False,
+    #                 topK_file='',
+    #                 write_topK_nodes=False,
+    #                 topK_save_path='output/'                  
+    #                 )
     # embedding(args)
