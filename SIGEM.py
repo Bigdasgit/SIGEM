@@ -139,9 +139,9 @@ def compute_loss_tfFunc(y_true, y_pred):
     ''' 
     y_pred -= tf.reduce_max(y_pred, axis=1, keepdims=True)
     exp_y = tf.exp(y_pred)
-    y_ture_scores = tf.gather(y_pred,y_true,axis=1,batch_dims=1) 
-    cumsum_y_ture_scores = tf.cumsum(tf.exp(y_ture_scores), axis=1, reverse=False, exclusive=True)    
-    loss_values = tf.math.log(tf.math.abs(tf.reduce_sum(exp_y, axis=1, keepdims=True) - cumsum_y_ture_scores ) + tf.keras.backend.epsilon()) - y_ture_scores
+    y_true_scores = tf.gather(y_pred,y_true,axis=1,batch_dims=1) 
+    cumsum_y_true_scores = tf.cumsum(tf.exp(y_true_scores), axis=1, reverse=False, exclusive=True)    
+    loss_values = tf.math.log(tf.math.abs(tf.reduce_sum(exp_y, axis=1, keepdims=True) - cumsum_y_true_scores ) + tf.keras.backend.epsilon()) - y_true_scores
     return tf.reduce_mean(tf.reduce_sum(loss_values, axis=1, keepdims=True))
 
 @tf.function    
