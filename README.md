@@ -71,7 +71,7 @@ SIGEM has the following parameters:
 ### NOTE:
 **It is highly recommended** to set the values of (1) "--itr" and "--damping_factor" to 5 and 0.2, respectively, for all tasks, (2) "--scaling_factor" to 10, 10, and 2 for link prediction, node classification, and graph reconstruction tasks, respectively, (3) "--bch_cpu", "--bch_gpu", and "--lr" parameters to the ones explained in Section 5.3.1 of the paper.
 
-**We optimized the implementation of LINOW-bn/TF**, reducing its execution time by approximately 20% with all datasets, compared to the values reported in Table 4 of the paper.
+**We optimized the implementation of LINOW-bn/TF**, reducing its execution time by approximately 15% with all datasets, compared to the values reported in Table 4 of the paper.
 
 ### Sample:
 1) Link Prediction Task
