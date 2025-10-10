@@ -94,7 +94,7 @@ python SIGEM.py --graph data/Cora_directed_graph.txt --dataset_name Cora --scali
 3) Graph Reconstruction Task
 
 ```
-python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --scaling_factor 2 --lr 0.0030
+python SIGEM.py --graph data/Live_undirected_graph.txt --dataset_name Live --scaling_factor 2 --lr 0.0030 --rg 0.00001
 ```
 
 ## Citation:
