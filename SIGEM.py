@@ -44,7 +44,7 @@ class CustomCallback_verbose_check():
         self.best_weights = None
         self.stop_training = False
         self.best_epoch = None      
-              
+    #BEGIN
     def on_epoch_begin(self, epoch):
         '''
             dynamic learning rate
