@@ -20,6 +20,7 @@ from scipy.sparse import csr_matrix
 import pickle
 import math
 
+#Custom
 class CustomCallback_verbose_check():
     '''
         1- Representing custom verbose informtation
