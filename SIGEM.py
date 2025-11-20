@@ -54,7 +54,7 @@ class CustomCallback_verbose_check():
             new_lr = cr_lr - (0.1*cr_lr) 
             if new_lr > 1e-6:
                 self.optimizer.learning_rate.assign(new_lr)
-                                       
+    #end                                      
     def on_epoch_end(self, epoch_loss, epoch):
         '''
             epoch verbose + early stopping 
